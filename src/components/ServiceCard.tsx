@@ -29,7 +29,6 @@ export function ServiceCard({
         <p className="sy-service-description">{service.summary}</p>
         <span className="sy-service-link" aria-hidden="true">Explore service <ArrowUpRight size={19} strokeWidth={1.7}/></span>
       </div>
-      <span className="sy-service-orbit" aria-hidden="true"/>
     </Link>
   );
 }
