@@ -38,7 +38,7 @@ body { background: var(--color-canvas); }
     transition-delay: var(--reveal-delay, 0ms);
   }
   .js [data-reveal].is-revealed { opacity: 1; filter: none; transform: none; }
-  .hero-intro { animation: none !important; }
+  .hero-intro { animation: none; }
 }
 .frame { background: #f8faf5; box-shadow: 0 15px 50px -32px rgb(20 57 40 / .2); }
 .frame-inner { background: #ecf1e8; box-shadow: inset 0 1px 6px rgb(32 67 48 / .08); }
