@@ -9,7 +9,7 @@
   --color-surface: #ffffff;
   --color-ink: #1d2924;
   --color-ink-2: #53635a;
-  --color-ink-3: #67796c;
+  --color-ink-3: #4c6254;
   --color-line: #dce5d9;
   --color-accent-50: #f3f8e9;
   --color-accent-100: #e8f3d2;
@@ -257,7 +257,7 @@ body { background: var(--color-canvas); }
 /* Six-service bento grid */
 .sy-services { background: #f7f7f2; }
 .sy-section-head { display: flex; justify-content: space-between; gap: 30px; align-items: end; }
-.sy-section-side { min-width: 160px; display: flex; flex-direction: column; gap: 9px; text-align: right; font-size: .7rem; letter-spacing: .13em; color: #67806e; font-weight: 600; }
+.sy-section-side { min-width: 160px; display: flex; flex-direction: column; gap: 9px; text-align: right; font-size: .7rem; letter-spacing: .13em; color: #466653; font-weight: 600; }
 .sy-muted { color: #668872; }
 .sy-service-grid { margin-top: clamp(35px, 5vw, 62px); display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
 .sy-service-item { min-width: 0; }
