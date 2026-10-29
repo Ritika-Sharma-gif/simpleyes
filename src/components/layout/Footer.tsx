@@ -19,7 +19,7 @@ const linkClass =
 export function Footer() {
   const year = new Date().getFullYear();
   return (
-    <footer className="relative overflow-hidden bg-canvas" aria-labelledby="footer-title">
+    <footer className="sy-footer relative overflow-hidden bg-canvas" aria-labelledby="footer-title">
       <div aria-hidden="true" className="hero-orb !top-[22%] opacity-70" />
       <div className="container-site relative pb-10 pt-[clamp(96px,12vw,160px)]">
         <p id="footer-title" className="type-display flex flex-wrap items-center gap-x-[0.18em] text-ink" data-reveal>
