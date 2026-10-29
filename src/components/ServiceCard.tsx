@@ -1,13 +1,9 @@
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import type { Service } from "@/content/services";
-import { CardFrame } from "@/components/ui/CardFrame";
 import { ServiceArt } from "@/components/illustrations/ServiceArt";
 
-/**
- * Reference service card: framed card, illustration panel, title, copy and a
- * small light "Learn more" pill. The whole card is one link (single tab stop).
- */
+/** The entire card is a single accessible link. Decorative artwork is not interactive. */
 export function ServiceCard({
   service,
   headingLevel = "h3",
@@ -19,29 +15,21 @@ export function ServiceCard({
 }) {
   const Heading = headingLevel;
   return (
-    <CardFrame hover className="h-full" cardClassName="flex flex-col gap-6">
-      <Link
-        href={`/services/${service.slug}/`}
-        className="card-link group flex h-full flex-col gap-6 rounded-[8px] focus-visible:outline-offset-[6px]"
-      >
-        <div className="card-art aspect-[16/10] w-full sm:aspect-auto sm:h-[clamp(200px,22vw,290px)]">
-          <ServiceArt
-            kind={service.illustration}
-            uid={artUid}
-            className="absolute inset-0 h-full w-full transition-transform duration-700 ease-[var(--ease-out-soft)] group-hover:scale-[1.03]"
-          />
-        </div>
-        <div className="flex flex-1 flex-col gap-4">
-          <Heading className="type-card-title">{service.title}</Heading>
-          <p className="type-body max-w-[52ch]">{service.summary}</p>
-          <span className="btn btn-light btn-sm mt-auto self-start" aria-hidden="true">
-            <span className="btn-face">
-              Learn More
-              <ArrowRight className="btn-icon size-4" strokeWidth={1.75} />
-            </span>
-          </span>
-        </div>
-      </Link>
-    </CardFrame>
+    <Link
+      href={`/services/${service.slug}/`}
+      className="sy-service-card card-link group"
+      data-spotlight
+    >
+      <div className="sy-service-art" aria-hidden="true">
+        <ServiceArt kind={service.illustration} uid={artUid} className="absolute inset-0 h-full w-full" />
+      </div>
+      <div className="sy-service-content">
+        <span className="sy-service-label">GUIDANCE / SIMPLYES</span>
+        <Heading className="sy-service-title">{service.title}</Heading>
+        <p className="sy-service-description">{service.summary}</p>
+        <span className="sy-service-link" aria-hidden="true">Explore service <ArrowUpRight size={19} strokeWidth={1.7}/></span>
+      </div>
+      <span className="sy-service-orbit" aria-hidden="true"/>
+    </Link>
   );
 }
