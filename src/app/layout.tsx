@@ -4,6 +4,7 @@ import localFont from "next/font/local";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import "./experience.css";
+import "./three-experience.css";
 import { isProductionBuild, site } from "@/content/site";
 import { organizationJsonLd, websiteJsonLd } from "@/lib/seo";
 import { Header } from "@/components/layout/Header";
