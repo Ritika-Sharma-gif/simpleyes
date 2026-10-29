@@ -12,7 +12,7 @@ const facts = [
 /** Reference "What we do": centered editorial statement with muted highlight words + fact pills. */
 export function WhatWeDo() {
   return (
-    <section aria-labelledby="what-we-do-title" className="section bg-white/80">
+    <section aria-labelledby="what-we-do-title" className="section story-intro bg-white/80">
       <div className="container-site flex flex-col items-center text-center">
         <div data-reveal>
           <Badge>What we do</Badge>

@@ -5,8 +5,9 @@ import { usePathname } from "next/navigation";
 
 /**
  * One shared IntersectionObserver for all `[data-reveal]` elements.
- * Pure progressive enhancement: without JS (or with reduced motion) nothing
- * is ever hidden. Re-scans on client-side navigation.
+ * Pure progressive enhancement: content is always visible, sharp and opaque.
+ * Marks elements early so a subtle translation finishes as they enter view.
+ * Re-scans on client-side navigation.
  */
 export function RevealObserver() {
   const pathname = usePathname();
@@ -27,7 +28,7 @@ export function RevealObserver() {
           }
         }
       },
-      { rootMargin: "0px 0px -8% 0px", threshold: 0.08 },
+      { rootMargin: "0px 0px 12% 0px", threshold: 0.01 },
     );
 
     elements.forEach((el) => observer.observe(el));
