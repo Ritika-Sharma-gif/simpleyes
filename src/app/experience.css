@@ -697,3 +697,57 @@ footer .divider-dashed { border-color: #244a3b20; }
   .sy-service-card,
   .sy-page-hero a { transition: none !important; }
 }
+
+
+/* Hero choreography: stagger short transformations, never make words invisible.
+ * No blur filters or layout-property animation. */
+@media (prefers-reduced-motion: no-preference) {
+  .sy-hero .sy-eyebrow { animation: sy-arrive .72s var(--sy-ease) both; }
+  .sy-hero .sy-hero-title { animation: sy-arrive .95s var(--sy-ease) .08s both; }
+  .sy-hero .sy-hero-lead { animation: sy-arrive .82s var(--sy-ease) .2s both; }
+  .sy-hero .sy-hero-actions { animation: sy-arrive .85s var(--sy-ease) .29s both; }
+  .sy-hero .sy-hero-disclosure { animation: sy-arrive .8s var(--sy-ease) .37s both; }
+  .sy-hero .sy-scene { animation: sy-scene-arrive 1.1s var(--sy-ease) .1s both; }
+  .sy-page-hero .hero-intro { animation: sy-arrive .75s var(--sy-ease) both; }
+  .sy-page-hero .hero-intro:nth-of-type(2) { animation-delay: .11s; }
+  @keyframes sy-arrive {
+    from { transform: translate3d(0, 19px, 0); }
+    to { transform: translate3d(0, 0, 0); }
+  }
+  @keyframes sy-scene-arrive {
+    from { transform: translate3d(0, 25px, 0) scale(.985); }
+    to { transform: translate3d(0, 0, 0) scale(1); }
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sy-hero .sy-eyebrow,
+  .sy-hero .sy-hero-title,
+  .sy-hero .sy-hero-lead,
+  .sy-hero .sy-hero-actions,
+  .sy-hero .sy-hero-disclosure,
+  .sy-hero .sy-scene,
+  .sy-page-hero .hero-intro {
+    animation: none !important;
+    transform: none !important;
+  }
+}
+
+/* Subtle visual transitions when entering the service rows. Individual
+ * elements are still readable before their observer fires. */
+@media (hover: hover) {
+  .sy-service-item .sy-service-card:hover .sy-service-label {
+    color: #315c40;
+  }
+  .sy-service-item .sy-service-card:hover .sy-service-title {
+    color: #285742;
+  }
+  .sy-story-facts li:hover {
+    border-color: #d7eba57e;
+    background: #d7eba51b;
+  }
+}
+.sy-service-title,
+.sy-service-label,
+.sy-story-facts li {
+  transition: color .32s ease, background-color .32s ease, border-color .32s ease;
+}
