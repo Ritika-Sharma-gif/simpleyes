@@ -11,7 +11,8 @@ import { NavLinks } from "./NavLinks";
  */
 export function Header() {
   return (
-    <header className="sy-header fixed inset-x-0 top-0 z-50">\n      <span className="sy-scroll-progress" aria-hidden="true" />
+    <header className="sy-header fixed inset-x-0 top-0 z-50">
+      <span className="sy-scroll-progress" aria-hidden="true" />
       {/* Desktop */}
       <div className="sy-header-bar hidden h-[var(--header-h)] border-b lg:block">
         <div className="container-site flex h-full items-center justify-between gap-6">
