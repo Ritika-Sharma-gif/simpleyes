@@ -103,11 +103,18 @@ export function DocumentExperience({ kind }: { kind: Kind }) {
 
   const enabled = eligible && !failed;
   const active = enabled && nearby;
+
+  // Mount only while in/near the viewport, guaranteeing the Canvas starts
+  // with a running frame loop. When it leaves, CSS art becomes visible again.
+  useEffect(() => {
+    if (!nearby) setReady(false);
+  }, [nearby]);
+
   return (
     <div
       ref={hostRef}
       data-3d-experience={kind}
-      data-3d-ready={ready && enabled ? "true" : "false"}
+      data-3d-ready={ready && active ? "true" : "false"}
       className={kind === "hero" ? "sy-hero-webgl" : "sy-process-webgl"}
       aria-hidden="true"
     >
@@ -118,8 +125,8 @@ export function DocumentExperience({ kind }: { kind: Kind }) {
           <span className="sy-process-static-sheet sy-process-static-three" />
         </div>
       )}
-      {enabled && (
-        <div className={ready ? "sy-canvas-holder sy-canvas-ready" : "sy-canvas-holder"}>
+      {active && (
+        <div className={ready && active ? "sy-canvas-holder sy-canvas-ready" : "sy-canvas-holder"}>
           <CanvasScene
             kind={kind}
             progressRef={progressRef}
