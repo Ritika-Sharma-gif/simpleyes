@@ -3,11 +3,13 @@ import type { ReactNode } from "react";
 import localFont from "next/font/local";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import "./experience.css";
 import { isProductionBuild, site } from "@/content/site";
 import { organizationJsonLd, websiteJsonLd } from "@/lib/seo";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { RevealObserver } from "@/components/RevealObserver";
+import { ExperienceMotion } from "@/components/ExperienceMotion";
 import { JsonLd } from "@/components/ui/JsonLd";
 
 /** Display face measured on the reference. Self-hosted (Fontshare, ITF Free Font License — see src/app/fonts/). */
@@ -42,7 +44,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#f7f7f7",
+  themeColor: "#f7f7f2",
   colorScheme: "light",
   width: "device-width",
   initialScale: 1,
@@ -66,6 +68,7 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
         </main>
         <Footer />
         <RevealObserver />
+        <ExperienceMotion />
         <JsonLd data={[organizationJsonLd(), websiteJsonLd()]} />
       </body>
     </html>
