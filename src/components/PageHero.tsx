@@ -21,10 +21,10 @@ export function PageHero({
   children?: ReactNode;
 }) {
   return (
-    <section className="relative isolate overflow-hidden pb-[clamp(48px,6vw,88px)] pt-[clamp(112px,11vw,168px)]">
+    <section className="sy-page-hero relative isolate overflow-hidden pb-[clamp(48px,6vw,88px)] pt-[clamp(112px,11vw,168px)]">
       <div aria-hidden="true" className="hero-rings -z-10" />
       <div aria-hidden="true" className="hero-orb -z-10 !top-[38%] opacity-80" />
-      <div className="container-site flex flex-col items-center text-center">
+      <div className="container-site sy-page-hero-content flex flex-col items-center text-center">
         <nav aria-label="Breadcrumb" className="hero-intro mb-6">
           <ol className="flex flex-wrap items-center justify-center gap-1 text-[0.8125rem] text-ink-2">
             <li>
