@@ -12,8 +12,9 @@ test("capture rendered 3D desktop and lightweight mobile fallback", async ({ pag
   await page.waitForTimeout(900);
   await page.locator(".sy-hero").screenshot({ path: "qa/3d-desktop-hero.png" });
 
-  await page.locator("#how-it-works").scrollIntoViewIfNeeded();
-  await page.waitForTimeout(700);
+  await page.locator(".sy-process-visual").scrollIntoViewIfNeeded();
+  await page.waitForTimeout(900);
+  await page.locator(".sy-process-visual").screenshot({ path: "qa/3d-process-stage.png" });
   await page.locator("#how-it-works").screenshot({ path: "qa/3d-process.png" });
 
   await page.setViewportSize({ width: 390, height: 844 });
