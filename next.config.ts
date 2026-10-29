@@ -12,6 +12,7 @@ const nextConfig: NextConfig = {
   output: "export",
   trailingSlash: true,
   reactStrictMode: true,
+  transpilePackages: ["three"],
   poweredByHeader: false,
   images: {
     // Static export has no image optimisation server. All raster assets are
