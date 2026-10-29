@@ -13,7 +13,7 @@ export function FinalCta({
   return (
     <section aria-labelledby="final-cta-title" className="section sy-final-section">
       <div className="container-site">
-        <div className="sy-final-panel" data-reveal>
+        <div className="sy-final-panel" data-reveal data-spotlight>
           <div className="relative flex flex-col items-center gap-6">
             <Badge>Let&apos;s make it simpler</Badge>
             <h2 id="final-cta-title" className="type-h2 max-w-[16ch]">{title}</h2>
