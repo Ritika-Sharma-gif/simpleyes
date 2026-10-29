@@ -751,3 +751,12 @@ footer .divider-dashed { border-color: #244a3b20; }
 .sy-story-facts li {
   transition: color .32s ease, background-color .32s ease, border-color .32s ease;
 }
+
+
+/* The magnetic link's accessible hit target stays fixed.
+ * Only the inner face shifts, never the anchor bounding box. */
+@media (hover: hover) and (pointer: fine) {
+  .btn[data-magnetic]:hover {
+    transform: none;
+  }
+}
