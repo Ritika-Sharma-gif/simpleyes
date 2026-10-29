@@ -10,8 +10,8 @@ export function Wordmark({ className, asLink = true }: { className?: string; asL
         className="inline-block size-[18px] rounded-full"
         style={{
           background:
-            "radial-gradient(circle at 35% 30%, #ffffff 0%, #cfe0b6 30%, #6f9a3c 70%, #3e6a00 100%)",
-          boxShadow: "0 2px 6px -1px rgb(62 106 0 / 0.45)",
+            "radial-gradient(circle at 32% 28%, #ffffff 0%, #d7eba5 28%, #6b9872 65%, #244a3b 100%)",
+          boxShadow: "0 2px 9px -2px rgb(36 74 59 / 0.4)",
         }}
       />
       <span className="font-display text-[1.375rem] font-medium leading-none tracking-[-0.03em] text-ink">
