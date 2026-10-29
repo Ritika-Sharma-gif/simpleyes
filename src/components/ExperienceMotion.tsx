@@ -3,9 +3,9 @@
 import { useEffect, useRef } from "react";
 
 /**
- * One rAF-driven interaction controller for cursor presence, spotlight cards
- * and soft hero parallax. Always preserves the native cursor and DOM semantics.
- * Completely inactive on touch and when the visitor requests reduced motion.
+ * One shared, rAF-throttled motion controller for hover-only enhancements.
+ * The native pointer, click targets, focus order and page scroll are unchanged.
+ * Nothing runs for touch/coarse pointers or reduced-motion preferences.
  */
 export function ExperienceMotion() {
   const cursorRef = useRef<HTMLSpanElement>(null);
@@ -14,14 +14,23 @@ export function ExperienceMotion() {
     const fine = window.matchMedia("(hover: hover) and (pointer: fine)");
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
     const cursor = cursorRef.current;
-    const scene = document.getElementById("simplyes-hero-scene");
     if (!cursor) return;
+
     let frame = 0;
     let last: PointerEvent | null = null;
     let highlighted: HTMLElement | null = null;
+    let magnetic: HTMLElement | null = null;
 
-    const clear = () => {
+    const clearMagnetic = () => {
+      if (!magnetic) return;
+      magnetic.style.removeProperty("--magnet-x");
+      magnetic.style.removeProperty("--magnet-y");
+      magnetic = null;
+    };
+
+    const reset = () => {
       cancelAnimationFrame(frame);
+      frame = 0;
       cursor.dataset.visible = "false";
       cursor.dataset.active = "false";
       if (highlighted) {
@@ -29,39 +38,55 @@ export function ExperienceMotion() {
         highlighted.style.removeProperty("--spot-y");
         highlighted = null;
       }
+      clearMagnetic();
+      const scene = document.getElementById("simplyes-hero-scene");
       scene?.style.setProperty("--scene-x", "0px");
       scene?.style.setProperty("--scene-y", "0px");
     };
 
     const paint = () => {
       frame = 0;
-      const e = last;
-      if (!e || !fine.matches || reduced.matches) return;
+      const event = last;
+      if (!event || !fine.matches || reduced.matches) return;
+      const node = event.target instanceof Element ? event.target : null;
 
       cursor.dataset.visible = "true";
-      cursor.style.transform = "translate3d(" + e.clientX + "px, " + e.clientY + "px, 0) translate(-50%, -50%)";
-      const node = e.target instanceof Element ? e.target : null;
-      const actionable = node?.closest("a, button, summary");
-      cursor.dataset.active = actionable ? "true" : "false";
+      cursor.dataset.active = node?.closest("a, button, summary") ? "true" : "false";
+      cursor.style.transform =
+        "translate3d(" + event.clientX + "px, " + event.clientY + "px, 0) translate(-50%, -50%)";
 
-      const spotlight = node?.closest<HTMLElement>("[data-spotlight]") ?? null;
-      if (highlighted && highlighted !== spotlight) {
+      const nextSpot = node?.closest<HTMLElement>("[data-spotlight]") ?? null;
+      if (highlighted && highlighted !== nextSpot) {
         highlighted.style.removeProperty("--spot-x");
         highlighted.style.removeProperty("--spot-y");
       }
-      highlighted = spotlight;
-      if (spotlight) {
-        const bounds = spotlight.getBoundingClientRect();
-        spotlight.style.setProperty("--spot-x", e.clientX - bounds.left + "px");
-        spotlight.style.setProperty("--spot-y", e.clientY - bounds.top + "px");
+      highlighted = nextSpot;
+      if (nextSpot) {
+        const rect = nextSpot.getBoundingClientRect();
+        nextSpot.style.setProperty("--spot-x", event.clientX - rect.left + "px");
+        nextSpot.style.setProperty("--spot-y", event.clientY - rect.top + "px");
       }
 
+      const nextMagnet = node?.closest<HTMLElement>("[data-magnetic]") ?? null;
+      if (magnetic && magnetic !== nextMagnet) clearMagnetic();
+      magnetic = nextMagnet;
+      if (nextMagnet) {
+        const rect = nextMagnet.getBoundingClientRect();
+        const x = (event.clientX - rect.left - rect.width / 2) / Math.max(rect.width / 2, 1);
+        const y = (event.clientY - rect.top - rect.height / 2) / Math.max(rect.height / 2, 1);
+        // Inner face only; the accessible link's hit area never moves.
+        nextMagnet.style.setProperty("--magnet-x", (Math.max(-1, Math.min(1, x)) * 3).toFixed(1) + "px");
+        nextMagnet.style.setProperty("--magnet-y", (Math.max(-1, Math.min(1, y)) * 2).toFixed(1) + "px");
+      }
+
+      const scene = document.getElementById("simplyes-hero-scene");
       if (scene) {
-        const bounds = scene.getBoundingClientRect();
-        const isNear = e.clientX >= bounds.left && e.clientX <= bounds.right && e.clientY >= bounds.top && e.clientY <= bounds.bottom;
-        if (isNear) {
-          const x = (e.clientX - bounds.left - bounds.width / 2) / (bounds.width / 2);
-          const y = (e.clientY - bounds.top - bounds.height / 2) / (bounds.height / 2);
+        const rect = scene.getBoundingClientRect();
+        const within = event.clientX >= rect.left && event.clientX <= rect.right &&
+          event.clientY >= rect.top && event.clientY <= rect.bottom;
+        if (within) {
+          const x = (event.clientX - rect.left - rect.width / 2) / (rect.width / 2);
+          const y = (event.clientY - rect.top - rect.height / 2) / (rect.height / 2);
           scene.style.setProperty("--scene-x", (x * 13).toFixed(1) + "px");
           scene.style.setProperty("--scene-y", (y * 10).toFixed(1) + "px");
         } else {
@@ -76,21 +101,21 @@ export function ExperienceMotion() {
       last = event;
       if (!frame) frame = requestAnimationFrame(paint);
     };
+    const onChange = () => reset();
 
-    const onPreferenceChange = () => clear();
     document.addEventListener("pointermove", onMove, { passive: true });
-    document.addEventListener("pointerleave", clear);
-    window.addEventListener("blur", clear);
-    fine.addEventListener("change", onPreferenceChange);
-    reduced.addEventListener("change", onPreferenceChange);
+    document.addEventListener("pointerleave", reset);
+    window.addEventListener("blur", reset);
+    fine.addEventListener("change", onChange);
+    reduced.addEventListener("change", onChange);
 
     return () => {
-      clear();
+      reset();
       document.removeEventListener("pointermove", onMove);
-      document.removeEventListener("pointerleave", clear);
-      window.removeEventListener("blur", clear);
-      fine.removeEventListener("change", onPreferenceChange);
-      reduced.removeEventListener("change", onPreferenceChange);
+      document.removeEventListener("pointerleave", reset);
+      window.removeEventListener("blur", reset);
+      fine.removeEventListener("change", onChange);
+      reduced.removeEventListener("change", onChange);
     };
   }, []);
 
