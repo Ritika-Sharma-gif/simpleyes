@@ -46,12 +46,14 @@ export function DocumentExperience({ kind }: { kind: Kind }) {
     motion.addEventListener("change", check);
 
     const observer = new IntersectionObserver(([entry]) => {
-      setNearby(Boolean(entry?.isIntersecting));
+      const visible = Boolean(entry?.isIntersecting);
+      setNearby(visible);
+      if (!visible) setReady(false);
     }, { rootMargin: "220px 0px", threshold: 0 });
     observer.observe(host);
 
     const onVisibility = () => {
-      if (document.hidden) setNearby(false);
+      if (document.hidden) { setNearby(false); setReady(false); }
       else {
         const rect = host.getBoundingClientRect();
         setNearby(rect.bottom > -220 && rect.top < window.innerHeight + 220);
@@ -104,12 +106,7 @@ export function DocumentExperience({ kind }: { kind: Kind }) {
   const enabled = eligible && !failed;
   const active = enabled && nearby;
 
-  // Mount only while in/near the viewport, guaranteeing the Canvas starts
-  // with a running frame loop. When it leaves, CSS art becomes visible again.
-  useEffect(() => {
-    if (!nearby) setReady(false);
-  }, [nearby]);
-
+  // Mount only while the scene is near the viewport; otherwise show static art.
   return (
     <div
       ref={hostRef}
