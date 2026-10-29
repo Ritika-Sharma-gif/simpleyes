@@ -44,12 +44,12 @@ const sequence: Pose[][] = [
 ];
 
 function poseFor(index: number, progress: number, kind: Kind): Pose {
-  if (kind === "hero") return stack[index];
+  if (kind === "hero") return stack[index] ?? stack[0]!;
   const key = Math.max(0, Math.min(2.99999, progress * 3));
   const a = Math.floor(key);
   const t = MathUtils.smoothstep(key - a, 0, 1);
-  const p = sequence[a][index];
-  const q = sequence[a + 1][index];
+  const p = sequence[a]?.[index] ?? stack[index] ?? stack[0]!;
+  const q = sequence[a + 1]?.[index] ?? stack[index] ?? stack[0]!;
   return {
     x: MathUtils.lerp(p.x, q.x, t),
     y: MathUtils.lerp(p.y, q.y, t),
