@@ -24,13 +24,13 @@ test.describe("Forest immersive redesign", () => {
     });
   }
 
-  test("pointer interactions leave site navigation usable", async ({ page }) => {
+  test("pointer interactions leave site navigation usable", async ({ page, isMobile }) => {
+    test.skip(isMobile, "fine-pointer interaction is intentionally off on mobile");
     await page.setViewportSize({ width: 1440, height: 900 });
     await page.goto("/");
     const heroScene = page.locator("#simplyes-hero-scene");
     await heroScene.hover();
-    const x = await heroScene.evaluate((node) => node.style.getPropertyValue("--scene-x"));
-    expect(x).toMatch(/px$/);
+    await expect.poll(() => heroScene.evaluate((node) => node.style.getPropertyValue("--scene-x"))).toMatch(/px$/);
     await page.getByRole("navigation", { name: "Primary" }).getByRole("link", { name: "Services" }).click();
     await expect(page).toHaveURL(/\/services\/$/);
   });
