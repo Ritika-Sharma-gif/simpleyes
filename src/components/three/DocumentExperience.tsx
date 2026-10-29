@@ -67,7 +67,7 @@ export function DocumentExperience({ kind }: { kind: Kind }) {
   }, []);
 
   useEffect(() => {
-    if (kind !== "process") return;
+    if (kind !== "process" || !eligible) return;
     let disposed = false;
     let disposeTrigger: (() => void) | undefined;
     (async () => {
@@ -99,7 +99,7 @@ export function DocumentExperience({ kind }: { kind: Kind }) {
       disposed = true;
       disposeTrigger?.();
     };
-  }, [kind]);
+  }, [kind, eligible]);
 
   const enabled = eligible && !failed;
   const active = enabled && nearby;
