@@ -1,3 +1,4 @@
+import { DocumentExperience } from "@/components/three/DocumentExperience";
 import { processSteps } from "@/content/home";
 import { Badge } from "@/components/ui/Badge";
 import { ButtonLink } from "@/components/ui/Button";
@@ -49,6 +50,7 @@ export function Process() {
               See How It Works
             </ButtonLink>
           </div>
+          <div className="sy-process-visual" data-reveal><DocumentExperience kind="process" /></div>
           <blockquote className="type-quote max-w-[24ch] text-ink" data-reveal>
             “We explain the requirements and help you prepare —{" "}
             <span className="text-ink-3">you stay in control of your application.</span>”
