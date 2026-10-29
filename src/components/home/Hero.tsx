@@ -1,3 +1,4 @@
+import { DocumentExperience } from "@/components/three/DocumentExperience";
 import { ArrowDownRight, ArrowUpRight, CheckCircle2, ShieldCheck } from "lucide-react";
 import { site } from "@/content/site";
 import { ButtonLink, WhatsAppButton } from "@/components/ui/Button";
@@ -27,6 +28,7 @@ export function Hero() {
         </div>
 
         <div id="simplyes-hero-scene" className="sy-scene" aria-hidden="true">
+          <DocumentExperience kind="hero" />
           <div className="sy-scene-grain" />
           <div className="sy-scene-orbit sy-scene-orbit-one" />
           <div className="sy-scene-orbit sy-scene-orbit-two" />
