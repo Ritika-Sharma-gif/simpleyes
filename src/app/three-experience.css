@@ -1,0 +1,78 @@
+/* Original 3D document experience — WebGL enhancement with CSS fallback.
+   The CSS hero stays in HTML and appears instantly, before JS and without WebGL. */
+.sy-hero-webgl {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  border-radius: inherit;
+  overflow: hidden;
+  pointer-events: none;
+}
+.sy-canvas-holder {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity .75s cubic-bezier(.22,1,.36,1);
+  background: #1c4536;
+}
+.sy-canvas-holder.sy-canvas-ready {
+  opacity: 1;
+  pointer-events: auto;
+}
+.sy-three-canvas { display: block; width: 100%; height: 100%; }
+.sy-process-visual {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  min-height: 305px;
+  border-radius: 25px;
+  background: radial-gradient(circle at 70% 27%, #416c52, transparent 50%), linear-gradient(135deg,#254f3d,#163629);
+  border: 1px solid #d7eba520;
+  box-shadow: 0 24px 50px -34px #17372b83;
+}
+.sy-process-webgl { position: absolute; inset: 0; z-index: 0; }
+.sy-process-static-art {
+  position: absolute;
+  inset: 0;
+  isolation: isolate;
+  pointer-events: none;
+  perspective: 750px;
+}
+.sy-process-static-sheet {
+  position: absolute;
+  top: 16%;
+  left: 50%;
+  width: clamp(130px,16vw,180px);
+  height: 68%;
+  border-radius: 12px;
+  background: repeating-linear-gradient(to bottom, transparent 0 29px, #244a3b19 30px 34px, transparent 35px 44px), #fffef4;
+  box-shadow: 0 16px 42px -22px #071c16b9, inset 0 1px #fff;
+  border: 1px solid #fff;
+  transform-origin: center;
+}
+.sy-process-static-one { transform: translateX(-76%) rotate(-17deg) rotateY(-13deg); }
+.sy-process-static-two { transform: translateX(-31%) rotate(14deg) rotateY(12deg); background-color: #d7eba5; }
+.sy-process-static-three { transform: translateX(-53%) translateY(2%) rotate(-2deg); }
+.sy-process-visual .sy-canvas-holder { z-index: 2; }
+.sy-process-list::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  top: 13px;
+  bottom: 13px;
+  left: 2px;
+  width: 2px;
+  background: linear-gradient(#9dbb84,#244a3b);
+  transform: scaleY(var(--process-progress, 0));
+  transform-origin: top center;
+}
+@media (max-width: 899px) {
+  .sy-hero-webgl { display: none; }
+  .sy-process-visual { min-height: 270px; max-width: 430px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sy-canvas-holder { transition: none; }
+  .sy-process-list::after { display: none; }
+}
