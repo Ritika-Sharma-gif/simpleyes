@@ -28,7 +28,7 @@ export function PageHero({
         <nav aria-label="Breadcrumb" className="hero-intro mb-6">
           <ol className="flex flex-wrap items-center justify-center gap-1 text-[0.8125rem] text-ink-2">
             <li>
-              <Link href="/" className="inline-flex min-h-6 items-center rounded px-1 underline-offset-4 hover:underline">
+              <Link href="/" className="inline-flex min-h-11 min-w-11 items-center justify-center rounded px-1 underline-offset-4 hover:underline">
                 Home
               </Link>
             </li>
@@ -42,7 +42,7 @@ export function PageHero({
                       {crumb.name}
                     </span>
                   ) : (
-                    <Link href={crumb.path} className="inline-flex min-h-6 items-center rounded px-1 underline-offset-4 hover:underline">
+                    <Link href={crumb.path} className="inline-flex min-h-11 min-w-11 items-center justify-center rounded px-1 underline-offset-4 hover:underline">
                       {crumb.name}
                     </Link>
                   )}
