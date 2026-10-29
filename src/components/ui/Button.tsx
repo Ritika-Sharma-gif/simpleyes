@@ -40,7 +40,7 @@ export function ButtonLink({
   className,
 }: CommonProps & { href: string }) {
   return (
-    <Link href={href} className={classes(variant, size, className)}>
+    <Link href={href} className={classes(variant, size, className)} data-magnetic>
       <Face icon={icon}>{children}</Face>
     </Link>
   );
@@ -63,6 +63,7 @@ export function WhatsAppButton({
       data-cta="whatsapp"
       data-topic={topic}
       className={classes(variant, size, className)}
+      data-magnetic
     >
       <Face icon={icon}>
         {children}

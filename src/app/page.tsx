@@ -4,6 +4,7 @@ import { site } from "@/content/site";
 import { Hero } from "@/components/home/Hero";
 import { WhatWeDo } from "@/components/home/WhatWeDo";
 import { Services } from "@/components/home/Services";
+import { AssistanceFinder } from "@/components/home/AssistanceFinder";
 import { Process } from "@/components/home/Process";
 import { WhySimplyes } from "@/components/home/WhySimplyes";
 import { Transparency } from "@/components/home/Transparency";
@@ -24,6 +25,7 @@ export default function HomePage() {
       <Hero />
       <WhatWeDo />
       <Services />
+      <AssistanceFinder />
       <Process />
       <WhySimplyes />
       <Transparency />
