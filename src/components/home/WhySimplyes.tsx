@@ -9,16 +9,17 @@ import { revealDelay } from "@/lib/style";
 export function WhySimplyes() {
   const rows = [benefits.slice(0, 2), benefits.slice(2, 4), benefits.slice(4, 6)];
   return (
-    <section id="why-simplyes" aria-labelledby="why-title" className="section bg-canvas">
+    <section id="why-simplyes" aria-labelledby="why-title" className="section sy-benefits bg-canvas">
       <div className="container-site">
         <SectionHeading
           id="why-title"
           badge="Why Simplyes"
           title="Support that keeps things simple"
+          align="left"
           lead="Clear, honest help for the Indian community across Germany."
         />
 
-        <div className="mt-12 flex flex-col gap-6 lg:mt-16">
+        <div className="sy-benefits-rows mt-12 flex flex-col gap-6 lg:mt-16">
           {rows.map((row, rowIndex) => (
             <div
               key={rowIndex}
@@ -29,12 +30,12 @@ export function WhySimplyes() {
               }`}
             >
               {row.map((benefit, i) => (
-                <div key={benefit.title} className="min-w-0" data-reveal style={revealDelay(i * 90)}>
-                  <CardFrame className="h-full" cardClassName="flex h-full flex-col gap-4">
-                    <div aria-hidden="true" className="h-[180px] overflow-hidden sm:h-[200px]">
+                <div key={benefit.title} className="sy-benefit-item min-w-0" data-reveal style={revealDelay(i * 90)}>
+                  <CardFrame className="sy-benefit-frame h-full" cardClassName="sy-benefit-card flex h-full flex-col gap-4">
+                    <div aria-hidden="true" className="sy-benefit-art h-[180px] overflow-hidden sm:h-[200px]">
                       <BenefitArt kind={benefit.art} />
                     </div>
-                    <h3 className="type-card-title">{benefit.title}</h3>
+                    <h3 className="type-card-title sy-benefit-title">{benefit.title}</h3>
                     <p className="type-body max-w-[48ch]">{benefit.body}</p>
                   </CardFrame>
                 </div>
