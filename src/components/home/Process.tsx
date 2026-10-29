@@ -7,7 +7,7 @@ import { revealDelay } from "@/lib/style";
 export function StepCard({ step, index }: { step: (typeof processSteps)[number]; index: number }) {
   return (
     <div data-reveal style={revealDelay(index * 90)} className="sy-process-step h-full">
-      <CardFrame className="h-full" cardClassName="flex h-full flex-col gap-6 !p-5 sm:!p-6">
+      <CardFrame className="h-full" cardClassName="sy-process-card flex h-full flex-col gap-6 !p-5 sm:!p-6">
         <div className="flex items-center justify-between">
           <span className="sy-process-number orb size-11 font-display text-base font-medium" aria-hidden="true">
             {step.number}
