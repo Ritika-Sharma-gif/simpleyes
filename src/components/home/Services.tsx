@@ -12,7 +12,7 @@ export function Services() {
           <SectionHeading
             id="services-title"
             badge="What we help with"
-            title={<>Practical help.<br /><span className="sy-muted">Personal clarity.</span></>}
+            title="How we can help"
             lead="Support with Indian consular and administrative processes — from understanding requirements to preparing your next step."
             align="left"
           />
