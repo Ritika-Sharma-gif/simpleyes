@@ -15,6 +15,12 @@ test.describe("Premium experience restoration", () => {
     await page.setViewportSize({ width: 1440, height: 900 });
     await page.goto("/");
     const cta = page.locator(".sy-hero-actions [data-magnetic]").first();
+    // Playwright scrolls the target into view on hover. Settle scrolling and
+    // finish the hero entrance BEFORE measuring its stable hit rectangle.
+    await cta.scrollIntoViewIfNeeded();
+    await page.locator(".sy-hero-actions").evaluate((element) => {
+      for (const animation of element.getAnimations()) animation.finish();
+    });
     const before = await cta.boundingBox();
     expect(before).not.toBeNull();
     await cta.hover({ position: { x: 18, y: 15 } });
