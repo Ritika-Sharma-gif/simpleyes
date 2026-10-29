@@ -14,7 +14,8 @@ export function WhySimplyes() {
         <SectionHeading
           id="why-title"
           badge="Why Simplyes"
-          title="Support that keeps things simple"\n          align="left"
+          title="Support that keeps things simple"
+          align="left"
           lead="Clear, honest help for the Indian community across Germany."
         />
 
