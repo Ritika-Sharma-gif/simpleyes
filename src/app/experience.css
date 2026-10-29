@@ -406,3 +406,294 @@ footer .divider-dashed { border-color: #244a3b20; }
   .sy-service-card:hover, .btn:hover { transform: none !important; }
   .sy-cursor { display: none; }
 }
+
+
+/* --- EXPERIENCE RESTORATION / OCT 2026 ------------------------------------
+ * The original content remains fully visible before JS, during scrolling
+ * and with reduced motion. Never blur or fade essential page content.
+ */
+:root {
+  --sy-ease: cubic-bezier(.19, 1, .22, 1);
+  --sy-motion-fast: 240ms;
+  --sy-motion-medium: 570ms;
+  --sy-motion-slow: 850ms;
+}
+
+/* Native browser scroll remains in charge. No scroll hijacking or body lock. */
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+  [data-reveal] {
+    will-change: auto;
+  }
+  .js [data-reveal] {
+    transform: translate3d(0, 12px, 0);
+    transition: transform var(--sy-motion-slow) var(--sy-ease);
+    transition-delay: min(var(--reveal-delay, 0ms), 180ms);
+  }
+  .js [data-reveal].is-revealed {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* Light reading-progress indication driven by the browser's scroll timeline.
+ * Older browsers just omit the decoration; the site still scrolls natively. */
+.sy-scroll-progress {
+  position: absolute;
+  inset: auto 0 0;
+  z-index: 3;
+  height: 2px;
+  background: linear-gradient(90deg, #a8ca80, #244a3b);
+  transform: scaleX(0);
+  transform-origin: left center;
+  pointer-events: none;
+}
+@supports (animation-timeline: scroll()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .sy-scroll-progress {
+      animation: sy-reading-progress linear both;
+      animation-timeline: scroll(root block);
+    }
+  }
+}
+@keyframes sy-reading-progress { to { transform: scaleX(1); } }
+
+/* Magnetic feedback moves an inner decorative face by <= 3px.
+ * The actual focusable/button hit rectangle stays fixed in the layout. */
+[data-magnetic] {
+  --magnet-x: 0px;
+  --magnet-y: 0px;
+}
+[data-magnetic] .btn-face {
+  transform: translate3d(var(--magnet-x), var(--magnet-y), 0);
+  transition: transform var(--sy-motion-medium) var(--sy-ease);
+}
+[data-magnetic]:focus-visible .btn-face {
+  transform: none;
+}
+
+/* Animated-link underline grows from an intentional origin, not opacity. */
+.sy-header nav[aria-label="Primary"] a,
+.sy-footer a {
+  text-decoration-color: transparent;
+  text-underline-offset: .3em;
+  transition: color var(--sy-motion-fast) ease, text-decoration-color var(--sy-motion-fast) ease;
+}
+.sy-header nav[aria-label="Primary"] a::before {
+  position: absolute;
+  content: "";
+  height: 1px;
+  inset: auto 16px 2px;
+  background: #244a3b;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform .45s var(--sy-ease);
+}
+@media (hover:hover) {
+  .sy-header nav[aria-label="Primary"] a:hover::before,
+  .sy-header nav[aria-label="Primary"] a:focus-visible::before,
+  .sy-header nav[aria-label="Primary"] a[aria-current="page"]::before {
+    transform: scaleX(1);
+  }
+  .sy-footer a:hover { text-decoration: underline; text-decoration-color: currentColor; }
+}
+
+/* A genuine editorial service row system: wide illustration/copy compositions
+ * alternating with focused vertical cards, never six identical boxes. */
+@media (min-width: 1101px) {
+  .sy-service-item:nth-child(1),
+  .sy-service-item:nth-child(4),
+  .sy-service-item:nth-child(5) { grid-column: span 2; }
+  .sy-service-item:nth-child(1) .sy-service-card,
+  .sy-service-item:nth-child(4) .sy-service-card,
+  .sy-service-item:nth-child(5) .sy-service-card {
+    flex-direction: row;
+    align-items: stretch;
+    gap: clamp(12px, 2vw, 30px);
+    min-height: 430px;
+  }
+  .sy-service-item:nth-child(1) .sy-service-art,
+  .sy-service-item:nth-child(4) .sy-service-art,
+  .sy-service-item:nth-child(5) .sy-service-art {
+    height: auto;
+    width: 52%;
+    flex: 0 0 52%;
+    min-width: 0;
+  }
+  .sy-service-item:nth-child(1) .sy-service-content,
+  .sy-service-item:nth-child(4) .sy-service-content,
+  .sy-service-item:nth-child(5) .sy-service-content {
+    min-width: 0;
+    justify-content: center;
+    padding-inline: 0 clamp(14px, 1.8vw, 30px);
+  }
+  .sy-service-item:nth-child(4) .sy-service-art { order: 2; }
+  .sy-service-item:nth-child(4) .sy-service-content { padding-inline: clamp(14px, 1.8vw, 30px) 0; }
+  .sy-service-item:nth-child(2),
+  .sy-service-item:nth-child(3),
+  .sy-service-item:nth-child(6) { align-self: stretch; }
+}
+.sy-service-card:focus-visible { outline: 3px solid #244a3b; outline-offset: 4px; }
+.sy-service-card::after { transition: opacity var(--sy-motion-medium) ease; }
+
+/* Four-step process becomes a readable scroll narrative beside sticky context. */
+.sy-process-section {
+  position: relative;
+  overflow: clip;
+  background-image: radial-gradient(ellipse at 90% 12%, #d7eba539, transparent 43%);
+}
+.sy-process-grid { position: relative; }
+.sy-process-intro { position: relative; }
+.sy-process-intro blockquote {
+  padding: 28px 0 0 22px;
+  border-left: 2px solid #8cad8e;
+  line-height: 1.55;
+}
+.sy-process-list {
+  position: relative;
+  padding-left: clamp(14px, 2.2vw, 28px);
+}
+.sy-process-list::before {
+  content: "";
+  position: absolute;
+  left: 2px;
+  top: 13px;
+  bottom: 13px;
+  width: 1px;
+  background: linear-gradient(#85a78b, #85a78b88 80%, transparent);
+}
+.sy-process-item {
+  position: relative;
+  min-width: 0;
+}
+.sy-process-item::before {
+  content: "";
+  position: absolute;
+  width: 9px;
+  height: 9px;
+  left: calc(-1 * clamp(14px, 2.2vw, 28px) - 2px);
+  top: 35px;
+  border-radius: 50%;
+  background: #91b080;
+  box-shadow: 0 0 0 5px #edf3e9, 0 0 0 6px #8da88e;
+}
+.sy-process-step { min-width: 0; }
+.sy-process-step .frame {
+  border: 1px solid #dbe7d4;
+  background: #f9fcf5;
+  box-shadow: 0 14px 43px -30px #244a3b43;
+  transition: box-shadow var(--sy-motion-medium) var(--sy-ease), border-color var(--sy-motion-medium) ease;
+}
+.sy-process-step .frame-inner { background: #eef4e9; }
+.sy-process-card { min-height: clamp(215px, 22vw, 260px); padding-block: clamp(22px, 2vw, 36px) !important; }
+.sy-process-number { width: 52px; height: 52px; }
+@media (hover: hover) {
+  .sy-process-step .frame:hover {
+    border-color: #a8c39d;
+    box-shadow: 0 29px 70px -48px #244a3b99;
+  }
+}
+.sy-process-step.is-revealed .sy-process-number {
+  animation: sy-step-pulse .85s var(--sy-ease) both;
+}
+@keyframes sy-step-pulse { from { transform: scale(.93); } to { transform: scale(1); } }
+
+/* Benefits: an intentional bento arrangement, editorial image lift and spacing. */
+.sy-benefits { background: linear-gradient(#f7f7f2, #f9faf5); }
+.sy-benefit-frame {
+  border: 1px solid #e0e9db;
+  background: #f6faf3;
+  box-shadow: 0 17px 38px -34px #244a3b45;
+  transition: transform .65s var(--sy-ease), box-shadow .65s var(--sy-ease);
+}
+.sy-benefit-frame .frame-inner { background: #f0f5eb; }
+.sy-benefit-card { padding: clamp(20px, 2.2vw, 30px) !important; min-height: 315px; }
+.sy-benefit-art {
+  display: grid;
+  place-items: center;
+  border-radius: 17px;
+  background: radial-gradient(ellipse at 50% 43%, #e0ebd7, #f3f6ed 70%);
+}
+.sy-benefit-art > svg {
+  max-width: 100%;
+  transition: transform .75s var(--sy-ease);
+}
+.sy-benefit-title { font-size: clamp(1.3rem, 1.7vw, 1.7rem); }
+@media (hover: hover) {
+  .sy-benefit-item:hover .sy-benefit-frame { box-shadow: 0 28px 60px -42px #244a3b95; }
+  .sy-benefit-item:hover .sy-benefit-art > svg { transform: translateY(-6px) scale(1.02); }
+}
+
+/* Sub-pages become part of one family rather than default template pages. */
+.sy-page-hero {
+  background: radial-gradient(ellipse at 63% 20%, #dcebcf66, transparent 53%),
+    linear-gradient(160deg, #f8f8f1 20%, #f0f4ea);
+  border-bottom: 1px solid #dce8d4;
+}
+.sy-page-hero::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  inset: auto 8% 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #97b39466, transparent);
+}
+.sy-page-hero-content { position: relative; }
+.sy-page-hero h1 { color: #244a3b; max-width: 19ch; }
+.sy-page-hero [aria-label="Breadcrumb"] a { transition: color .25s ease; }
+.sy-page-hero [aria-label="Breadcrumb"] a:hover { color: #244a3b; }
+
+/* Native details/summary keep keyboard and no-JS accordion functionality.
+ * Animate icon and border only where browser supports the content transition. */
+.faq-item {
+  transition: border-color .4s ease, background-color .4s ease, box-shadow .4s ease;
+}
+.faq-item summary:focus-visible { outline-offset: 4px; }
+.faq-item[open] { box-shadow: 0 17px 40px -30px #244a3b52; }
+.faq-toggle { transition: transform .4s var(--sy-ease), background .4s ease; }
+.faq-item[open] .faq-toggle { background: #dcebcf; }
+
+/* Spotlight is decorative and never interferes with click targets. */
+.sy-final-panel {
+  --spot-x: 50%;
+  --spot-y: 50%;
+}
+.sy-final-panel::after {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  z-index: -1;
+  background: radial-gradient(400px circle at var(--spot-x) var(--spot-y), #d7eba522, transparent 75%);
+}
+
+/* Footer anchors receive deliberate motion, without floating content. */
+.sy-footer .type-display { line-height: 1.1; }
+.sy-footer .type-display .glass-word { transition: box-shadow .5s var(--sy-ease); }
+@media (hover: hover) {
+  .sy-footer .type-display .glass-word:hover {
+    box-shadow: 0 0 0 4px #fff9, 0 22px 50px -20px #244a3b90;
+  }
+}
+
+@media (max-width: 1100px) {
+  .sy-process-list { padding-left: 21px; }
+  .sy-process-item::before { left: -23px; }
+}
+@media (max-width: 639px) {
+  .sy-process-list { padding-left: 18px; }
+  .sy-process-item::before { left: -20px; }
+  .sy-process-card { min-height: auto; }
+  .sy-benefit-card { min-height: 0; }
+}
+
+/* Always respect user preference and low-power touch contexts. */
+@media (prefers-reduced-motion: reduce) {
+  .sy-scroll-progress { display: none; }
+  [data-magnetic] .btn-face { transform: none !important; transition: none !important; }
+  .sy-process-step.is-revealed .sy-process-number { animation: none !important; }
+  .sy-benefit-frame,
+  .sy-benefit-art > svg,
+  .sy-service-card,
+  .sy-page-hero a { transition: none !important; }
+}
